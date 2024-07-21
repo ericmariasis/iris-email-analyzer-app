@@ -15,4 +15,4 @@ iris.system.Process.SetNamespace("USER")
 
 # load ipm package listed in module.xml
 #iris.cls('%ZPM.PackageManager').Shell("load /home/irisowner/dev -v")
-assert ipm('load /home/irisowner/dev -v')
+#assert ipm('load /home/irisowner/dev -v')
