@@ -1,0 +1,26 @@
+.form-group {
+    margin-bottom: 1.5rem; /* Adjust the bottom margin as needed */
+}
+
+.form-group.row {
+    margin-left: 2rem; /* Adjust the left margin for form groups */
+}
+
+label {
+    margin-bottom: 0.5rem; /* Adjust the bottom margin of labels */
+}
+
+textarea {
+    resize: vertical; /* Allows the textarea to be resized vertically */
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+.button-left-margin {
+    margin-left: 2rem; /* Adjust the margin as needed */
+}
+

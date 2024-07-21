@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1 class="form-group row">Analyze Email</h1>
+    <div class="form-group row">
+        <label for="toEmail" class="col-sm-2 col-form-label text-right">To</label>
+        <input type="email" class="form-control" id="toEmail" name="to_email" placeholder="name@example.com">
+    </div>
+    </div>
+    <div class="form-group row">
+        <label for="ccEmail" class="col-sm-2 col-form-label text-right">Cc</label>
+        <input type="email" class="form-control" id="ccEmail" name="cc_email">
+    </div>
+    <div class="form-group row">
+        <label for="bccEmail" class="form-label">Bcc</label>
+        <input type="email" class="form-control" id="bccEmail" name="bcc_email">
+    </div>
+    <div class="form-group row">
+        <label for="message" class="form-label">Message</label>
+        <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+    </div>
+    <div class="d-grid gap-2 d-md-block">
+        <button class="btn btn-primary button-left-margin" type="button">Analyze</button>
+    </div>
+{% endblock %}

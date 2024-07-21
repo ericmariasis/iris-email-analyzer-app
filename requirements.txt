@@ -1,0 +1,9 @@
+flask_login
+flask==2.3.3
+werkzeug~=3.0.3
+SQLAlchemy~=2.0.31
+flask-markdown
+sqlalchemy-iris
+Flask-WTF
+email_validator
+wtforms~=3.1.2
