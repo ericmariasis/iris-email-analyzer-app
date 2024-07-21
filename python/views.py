@@ -14,9 +14,35 @@ def index():  # put application's code here
     return render_template('index.html', user=current_user)
 
 
-@views.route('/analyze_email')
+@views.route('/analyze_email', methods=['GET', 'POST'])
 def analyze_email():
-    return render_template('analyze_email.html', user=current_user)
+    if request.method == 'POST':
+        toEmail = request.form['toEmail']
+        ccEmail = request.form['ccEmail']
+        bccEmail = request.form['bccEmail']
+        message = request.form['message']
+
+        # Save each form field to a separate text file
+        with open('toEmail.txt', 'a') as f_to:
+            f_to.write(f"{toEmail}\n")
+
+        with open('ccEmail.txt', 'a') as f_cc:
+            f_cc.write(f"{ccEmail}\n")
+
+        with open('bccEmail.txt', 'a') as f_bcc:
+            f_bcc.write(f"{bccEmail}\n")
+
+        with open('message.txt', 'a') as f_message:
+            f_message.write(f"{message}\n")
+
+        flash('Email details saved successfully.', 'success')
+
+        # Pass the form data back to the template
+        return render_template('analyze_email.html', user=current_user, toEmail=toEmail, ccEmail=ccEmail,
+                               bccEmail=bccEmail, message=message)
+
+    # Render the form with empty fields on GET request
+    return render_template('analyze_email.html', user=current_user, toEmail='', ccEmail='', bccEmail='', message='')
 
 @views.route('/roles')
 def roles():

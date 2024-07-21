@@ -1,24 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
     <h1 class="form-group row">Analyze Email</h1>
-    <div class="form-group row">
-        <label for="toEmail" class="col-sm-2 col-form-label text-right">To</label>
-        <input type="email" class="form-control" id="toEmail" name="to_email" placeholder="name@example.com">
-    </div>
-    </div>
-    <div class="form-group row">
-        <label for="ccEmail" class="col-sm-2 col-form-label text-right">Cc</label>
-        <input type="email" class="form-control" id="ccEmail" name="cc_email">
-    </div>
-    <div class="form-group row">
-        <label for="bccEmail" class="form-label">Bcc</label>
-        <input type="email" class="form-control" id="bccEmail" name="bcc_email">
-    </div>
-    <div class="form-group row">
-        <label for="message" class="form-label">Message</label>
-        <textarea class="form-control" id="message" name="message" rows="3"></textarea>
-    </div>
-    <div class="d-grid gap-2 d-md-block">
-        <button class="btn btn-primary button-left-margin" type="button">Analyze</button>
-    </div>
+    <form method="post" id="emailForm">
+        <div class="form-group row">
+            <label for="toEmail" class="col-sm-2 col-form-label text-right">To</label>
+            <input type="email" class="form-control" id="toEmail" name="toEmail" placeholder="name@example.com" value="{{ toEmail }}">
+        </div>
+        <div class="form-group row">
+            <label for="ccEmail" class="col-sm-2 col-form-label text-right">Cc</label>
+            <input type="email" class="form-control" id="ccEmail" name="ccEmail" value="{{ ccEmail }}">
+        </div>
+        <div class="form-group row">
+            <label for="bccEmail" class="col-sm-2 col-form-label text-right">Bcc</label>
+            <input type="email" class="form-control" id="bccEmail" name="bccEmail" value="{{ bccEmail }}">
+        </div>
+        <div class="form-group row">
+            <label for="message" class="form-label">Message</label>
+            <textarea class="form-control" id="message" name="message" rows="3">{{ message }}</textarea>
+        </div>
+                <div class="form-group row">
+            <label for="attachments" class="form-label">Attachments</label>
+            <input type="file" class="form-control" id="attachments" name="attachments" multiple>
+        </div>
+        <div class="d-grid gap-2 d-md-block">
+            <button class="btn btn-primary button-left-margin" type="submit">Analyze</button>
+        </div>
+        <div class="d-grid gap-2 d-md-block mt-5">
+            <button class="btn btn-danger button-left-margin" type="button" onclick="clearForm()">Clear All</button>
+        </div>
+    </form>
+
+    <script>
+        function clearForm() {
+            document.getElementById("emailForm").reset();
+        }
+    </script>
 {% endblock %}
