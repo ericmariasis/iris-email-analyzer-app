@@ -1,1 +1,5 @@
-# iris-email-analyzer-app
+---
+tags:
+- iris-email-analyzer-app
+library_name: generic
+---
