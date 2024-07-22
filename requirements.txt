@@ -10,3 +10,6 @@ email_validator
 wtforms~=3.1.2
 llama-index-llms-openai
 llama-index
+llama-iris
+testcontainers-iris
+python-dotenv
