@@ -1,13 +1,24 @@
+import os.path
+import shutil
+
 from flask import Flask, render_template, request, redirect, url_for, flash, Blueprint
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 
 from python.forms import SignupForm
 from .models import *
 from .myconfig import *
+from .llamaindex import *
 views = Blueprint('views', __name__)
 app = Flask(__name__)
 
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+ALLOWED_EXTENSIONS = {'pdf', 'docx', 'txt'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @views.route('/')
 def index():  # put application's code here
@@ -16,11 +27,12 @@ def index():  # put application's code here
 
 @views.route('/analyze_email', methods=['GET', 'POST'])
 def analyze_email():
+    analysis_result = ""
     if request.method == 'POST':
-        toEmail = request.form['toEmail']
-        ccEmail = request.form['ccEmail']
-        bccEmail = request.form['bccEmail']
-        message = request.form['message']
+        toEmail = request.form['toEmail'].strip()
+        ccEmail = request.form['ccEmail'].strip()
+        bccEmail = request.form['bccEmail'].strip()
+        message = request.form['message'].strip()
 
         # Save each form field to a separate text file
         with open('toEmail.txt', 'a') as f_to:
@@ -35,14 +47,64 @@ def analyze_email():
         with open('message.txt', 'a') as f_message:
             f_message.write(f"{message}\n")
 
-        flash('Email details saved successfully.', 'success')
+            # Ensure the upload folder exists
+        if not os.path.exists(app.config['UPLOAD_FOLDER']):
+            os.makedirs(app.config['UPLOAD_FOLDER'])
+        files = []
+        if 'attachments' in request.files:
+            afiles = request.files.getlist('attachments')
+            for file in afiles:
+                if file and allowed_file(file.filename):
+                    filename = secure_filename(file.filename)
+                    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    files.append(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
+        flash('Email details saved successfully.', 'success')
+        companyQ = "Does this look like an email address from outside of a company .com domain?"
+        if message:
+            analysisAnswer = run_query_on_files(['message.txt'], "Is there anything suspicious in this content? If so what is it? And is there any confidential information provided?")
+            analysis_result += "Q: Is there anything suspicious or confidential in the message?\n"
+            analysis_result += str(analysisAnswer)
+        if toEmail:
+            analysis_result += "\n\nQ: Are there any non-company emails listed in the To: field?\n"
+            nonCompanyToEmails = run_query_on_files(['toEmail.txt'], companyQ)
+            analysis_result += str(nonCompanyToEmails)
+        if ccEmail:
+            analysis_result += "\n\nQ: Are there any non-company emails listed in the Cc: field?\n"
+            nonCompanyCcEmails = run_query_on_files(['ccEmail.txt'], companyQ)
+            analysis_result += str(nonCompanyCcEmails)
+        if bccEmail:
+            analysis_result += "\n\nQ: Are there any non-company emails listed in the Bcc: field?\n"
+            nonCompanyBccEmails = run_query_on_files(['bccEmail.txt'], companyQ)
+            analysis_result += str(nonCompanyBccEmails)
+        if len(files) > 0:
+            analysis_result += "\n\nQ: Is there anything suspicious or confidential in the uploaded attachments?\n"
+            attachmentAnswer = run_query_on_files(files, "Is there anything suspicious in this content? If so what is it? And is there anything confidential?")
+            analysis_result += str(attachmentAnswer)
         # Pass the form data back to the template
-        return render_template('analyze_email.html', user=current_user, toEmail=toEmail, ccEmail=ccEmail,
-                               bccEmail=bccEmail, message=message)
+        response = render_template('analyze_email.html', user=current_user, toEmail=toEmail, ccEmail=ccEmail,
+                               bccEmail=bccEmail, message=message, analysis_result=analysis_result)
+        toDelete = ['message.txt', 'toEmail.txt', 'ccEmail.txt', 'bccEmail.txt']
+        for file in toDelete:
+            try:
+                if os.path.exists(file):
+                    os.remove(file)
+            except Exception as e:
+                print("Error deleting", file, ": {e}")
+        # Delete the contents of the upload directory
+        for filename in os.listdir(app.config['UPLOAD_FOLDER']):
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            try:
+                if os.path.isfile(file_path) or os.path.islink(file_path):
+                    os.unlink(file_path)
+                elif os.path.isdir(file_path):
+                    shutil.rmtree(file_path)
+            except Exception as e:
+                print(f'Failed to delete {file_path}. Reason: {e}')
+        return response
 
     # Render the form with empty fields on GET request
-    return render_template('analyze_email.html', user=current_user, toEmail='', ccEmail='', bccEmail='', message='')
+    return render_template('analyze_email.html', user=current_user, toEmail='', ccEmail='', bccEmail='', message='', analysis_result=analysis_result)
 
 @views.route('/roles')
 def roles():

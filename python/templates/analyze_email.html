@@ -1,38 +1,68 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1 class="form-group row">Analyze Email</h1>
-    <form method="post" id="emailForm">
-        <div class="form-group row">
-            <label for="toEmail" class="col-sm-2 col-form-label text-right">To</label>
-            <input type="email" class="form-control" id="toEmail" name="toEmail" placeholder="name@example.com" value="{{ toEmail }}">
+<h1 class="form-group row">Analyze Email</h1>
+<div class="info-box">
+    <h2 class="form-group row email-ins">Fill in the fields for any email you want to analyze and click the Analyze button below to run an analysis.</h2>
+    <h2 class="form-group row email-ins">The results will be shown in the box that says Analysis Result lower down.</h2>
+    <h2 class="form-group row email-ins">For attachments this supports .docx, .txt and pdf files.</h2>
+</div>
+<form method="post" id="emailForm" enctype="multipart/form-data" onsubmit="return handleFormSubmit();">
+    <div class="form-group row">
+        <label for="toEmail" class="col-sm-2 col-form-label text-right">To</label>
+        <input type="email" class="form-control" id="toEmail" name="toEmail" placeholder="name@example.com" value="{{ toEmail }}">
+    </div>
+    <div class="form-group row">
+        <label for="ccEmail" class="col-sm-2 col-form-label text-right">Cc</label>
+        <input type="email" class="form-control" id="ccEmail" name="ccEmail" value="{{ ccEmail }}">
+    </div>
+    <div class="form-group row">
+        <label for="bccEmail" class="col-sm-2 col-form-label text-right">Bcc</label>
+        <input type="email" class="form-control" id="bccEmail" name="bccEmail" value="{{ bccEmail }}">
+    </div>
+    <div class="form-group row">
+        <label for="message" class="form-label">Message</label>
+        <textarea class="form-control" id="message" name="message" rows="3">{{ message }}</textarea>
+    </div>
+    <div class="form-group row">
+        <label for="attachments" class="form-label">Attachments</label>
+        <input type="file" class="form-control" id="attachments" name="attachments" multiple accept=".pdf,.docx,.txt">
+    </div>
+    <div class="d-grid gap-2 d-md-block">
+        <button class="btn btn-primary button-left-margin" type="submit" id="analyzeButton">Analyze</button>
+        <div id="loadingSpinner" class="spinner-border text-primary" role="status" style="display: none;">
+            <span class="visually-hidden">Loading...</span>
         </div>
-        <div class="form-group row">
-            <label for="ccEmail" class="col-sm-2 col-form-label text-right">Cc</label>
-            <input type="email" class="form-control" id="ccEmail" name="ccEmail" value="{{ ccEmail }}">
+    </div>
+    <div class="d-grid gap-2 d-md-block mt-5">
+        <button class="btn btn-danger button-left-margin" type="button" id="clearButton" onclick="clearForm()">Clear All</button>
+    </div>
+    <!-- Read-Only Form -->
+    <div class="mt-4 form-group row">
+        <h2>Analysis Result</h2>
+        <div class="form-group">
+            <textarea class="form-control analysis-result" id="analysisResult" rows="10" readonly>{{ analysis_result }}</textarea>
         </div>
-        <div class="form-group row">
-            <label for="bccEmail" class="col-sm-2 col-form-label text-right">Bcc</label>
-            <input type="email" class="form-control" id="bccEmail" name="bccEmail" value="{{ bccEmail }}">
-        </div>
-        <div class="form-group row">
-            <label for="message" class="form-label">Message</label>
-            <textarea class="form-control" id="message" name="message" rows="3">{{ message }}</textarea>
-        </div>
-                <div class="form-group row">
-            <label for="attachments" class="form-label">Attachments</label>
-            <input type="file" class="form-control" id="attachments" name="attachments" multiple>
-        </div>
-        <div class="d-grid gap-2 d-md-block">
-            <button class="btn btn-primary button-left-margin" type="submit">Analyze</button>
-        </div>
-        <div class="d-grid gap-2 d-md-block mt-5">
-            <button class="btn btn-danger button-left-margin" type="button" onclick="clearForm()">Clear All</button>
-        </div>
-    </form>
+    </div>
+</form>
 
-    <script>
-        function clearForm() {
-            document.getElementById("emailForm").reset();
-        }
-    </script>
+<script>
+    function clearForm() {
+        document.getElementById("emailForm").reset();
+        document.getElementById("toEmail").value = '';
+        document.getElementById("ccEmail").value = '';
+        document.getElementById("bccEmail").value = '';
+        document.getElementById("message").value = '';
+        document.getElementById("analysisResult").value = '';
+    }
+
+    function handleFormSubmit() {
+        // Disable the Analyze and Clear All buttons
+        document.getElementById("analyzeButton").disabled = true;
+        document.getElementById("clearButton").disabled = true;
+        // Show the loading spinner
+        document.getElementById("loadingSpinner").style.display = "inline-block";
+        // Allow form submission to proceed
+        return true;
+    }
+</script>
 {% endblock %}

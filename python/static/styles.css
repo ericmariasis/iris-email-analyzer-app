@@ -4,6 +4,7 @@
 
 .form-group.row {
     margin-left: 2rem; /* Adjust the left margin for form groups */
+    margin-right: 2rem;
 }
 
 label {
@@ -22,5 +23,38 @@ textarea {
 
 .button-left-margin {
     margin-left: 2rem; /* Adjust the margin as needed */
+    margin-right: 2rem;
 }
 
+.analysis-result {
+    font-family: 'Courier New', Courier, monospace; /* Use a monospaced font for better readability */
+    white-space: pre-wrap; /* Preserve whitespace and line breaks */
+    background-color: #f8f9fa; /* Light grey background */
+    border: 1px solid #ced4da; /* Border color similar to form control */
+    padding: 10px; /* Padding inside the textarea */
+    color: #007bff !important; /* Text color blue */
+    font-weight: bold !important; /* Make text bold */
+    font-size: large !important;
+}
+
+.text-start {
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+.navbar {
+    margin-left: 2rem;
+}
+
+.email-ins {
+    color: darkgreen;
+}
+
+.info-box {
+    border: 1px solid lightgray;
+    padding: 20px;
+    background-color: #f9f9f9; /* Light grey background for the info box */
+    margin-bottom: 20px; /* Add some space below the box */
+    margin-left: 2rem;
+    margin-right: 2rem;
+}

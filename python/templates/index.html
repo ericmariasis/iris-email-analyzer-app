@@ -1,4 +1,18 @@
 {% extends "base.html" %}
 {% block title %}Home Page{% endblock %}
 {% block content %}
+<h1 class="form-group row">Welcome!</h1>
+<div class="info-box">
+    <p class="text-start fs-3">Hello and welcome to the Iris email analyzer app!</p>
+    <p class="text-start fs-3">This application lets you input different parts of an email you plan to send and uses the
+        llama-index package to analyze the contents.</p>
+    <p class="text-start fs-3">Click <b>Analyze Email</b> up top to get started!</p>
+    <p class="text-start fs-3">You can enter the email addresses you plan to send to in the To, Bcc and CC fields to
+        analyze them for being non-company emails. </p>
+    <p class="text-start fs-3">And you can analyze your email message and any attachments for suspicious or confidential
+        content.
+    </p>
+</div>
+
+
 {%  endblock %}
