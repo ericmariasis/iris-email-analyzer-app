@@ -43,18 +43,18 @@ from sqlalchemy import create_engine, text
 
 url = f"iris://{username}:{password}@{hostname}:{port}/{namespace}"
 
-engine = create_engine(url, connect_args={"sslcontext": sslcontext})
-with engine.connect() as conn:
-    print(conn.execute(text("SELECT 'hello world!'")).first()[0])
-
-# StorageContext captures how vectors will be stored
-vector_store = IRISVectorStore.from_params(
-    connection_string = url,
-    table_name = "user",
-    embed_dim = 1536,  # openai embedding dimension
-    engine_args = { "connect_args": {"sslcontext": sslcontext} }
-)
-storage_context = StorageContext.from_defaults(vector_store=vector_store)
+# engine = create_engine(url, connect_args={"sslcontext": sslcontext})
+# with engine.connect() as conn:
+#     print(conn.execute(text("SELECT 'hello world!'")).first()[0])
+#
+# # StorageContext captures how vectors will be stored
+# vector_store = IRISVectorStore.from_params(
+#     connection_string = url,
+#     table_name = "user",
+#     embed_dim = 1536,  # openai embedding dimension
+#     engine_args = { "connect_args": {"sslcontext": sslcontext} }
+# )
+# storage_context = StorageContext.from_defaults(vector_store=vector_store)
 def get_filename_before_dot(filename):
     name, extension = os.path.splitext(filename)
     return name
