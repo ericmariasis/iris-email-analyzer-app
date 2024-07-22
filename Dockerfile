@@ -10,6 +10,7 @@ ARG TESTS=0
 ARG MODULE="iris-email-analyzer-app"
 ARG NAMESPACE="USER"
 
+ENV DOCKER_BUILDKIT=1
 
 # create Python env
 ## Embedded Python environment
