@@ -1,6 +1,7 @@
 ---
-tags:
-- iris-email-analyzer-app
-library_name: generic
+title: Iris Email Analyzer App
 sdk: docker
+app_file: app.py
+pinned: false
 ---
+
