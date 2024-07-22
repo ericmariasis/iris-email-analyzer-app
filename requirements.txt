@@ -13,3 +13,4 @@ llama-index
 llama-iris
 testcontainers-iris
 python-dotenv
+streamlit==1.34.0
