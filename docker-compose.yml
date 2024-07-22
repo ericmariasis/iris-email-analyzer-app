@@ -7,7 +7,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: 6
+          cpus: "6"
     environment:
       - ISC_CPF_MERGE_FILE=/irisdev/app/merge.cpf
       - DOCKER_BUILDKIT=1
