@@ -79,3 +79,9 @@ The home page upon opening the app looks something like this.
 The analyze email page has a form that looks like below where all fields are optional and they are analyzed if they are filled in upon pressing the Analyze button, and the results are shown in the Analysis Results read only box at the bottom.
 
 ![Analyze Email Form](assets/AnalyzeEmail.png)
+
+## Database with SQLAlchemy-Iris
+
+The table to store user info created on signup is called **user**.
+
+To look at the table in Iris while the app is running, navigate to [http://localhost:55038/csp/sys/exp/%25CSP.UI.Portal.SQL.Home.zen?$NAMESPACE=USER&](http://localhost:55038/csp/sys/exp/%25CSP.UI.Portal.SQL.Home.zen?$NAMESPACE=USER&)
