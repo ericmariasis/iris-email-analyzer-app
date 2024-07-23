@@ -32,6 +32,8 @@ If you want to run the core part of the app properly, you will need to use a val
 
 To get an OpenAI API key if you don't already have one, go to [this page](https://platform.openai.com/docs/quickstart/step-2-set-up-your-api-key) to learn how to get one.
 
+Once you have an OpenAI API key, go to [this file](python/myconfig.py), python/myconfig.py in your local repo clone and update the value of `OPENAI_API_KEY` to the value of your key.
+
 ### Run the app
 
 Run the below command, again in a terminal with Docker access, to run an iris shell.
@@ -39,4 +41,18 @@ Run the below command, again in a terminal with Docker access, to run an iris sh
 ```
 docker compose exec iris bash
 ```
+Once you run that, you should see a bash shell that looks something like this.
 
+![$dev](assets/Bash.png)
+
+Then run
+
+```
+irispython app.py
+```
+
+to run the app locally.
+
+When it kicks off, at the bottom of the output you should see a series of `Running on` statements. Click any of them to open the app's homepage in a browser.
+
+## Using the app
