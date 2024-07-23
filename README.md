@@ -71,3 +71,7 @@ When it kicks off, at the bottom of the output you should see a series of `Runni
 The home page upon opening the app looks something like this.
 
 ![App Homepage](assets/HomePage.png)
+
+The analyze email page has a form that looks like below where all fields are optional and they are analyzed if they are filled in and the results are shown in the Analysis Results read only box at the bottom.
+
+![Analyze Email Form]()
