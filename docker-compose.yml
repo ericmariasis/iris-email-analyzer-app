@@ -12,9 +12,8 @@ services:
       - 55038:52773
       - 53773
       - 4040:4040
-    command:
-      - --check-caps false
     volumes:
       - ./:/home/irisowner/dev
       - ./entrypoint.sh:/docker-entrypoint-initdb.d/entrypoint.sh
       - ./src/grongier:/usr/irissys/mgr/python/grongier
+    command: ["bash", "-c", "iris start IRIS && irispython app.py"]

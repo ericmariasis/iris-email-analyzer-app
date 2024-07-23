@@ -23,7 +23,9 @@ ENV LD_LIBRARY_PATH=${ISC_PACKAGE_INSTALLDIR}/bin:${LD_LIBRARY_PATH}
 ENV PATH="/usr/irissys/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/irisowner/bin:/home/irisowner/.local/bin"
 ENV FILE_READ_PATH=/home/irisowner/dev/input
 
-## Start IRIS
+COPY . .
+
+# Install dependencies and run initial setup
 RUN --mount=type=bind,src=.,dst=. \
     pip3 install -r requirements.txt && \
     iris start IRIS && \
@@ -31,6 +33,8 @@ RUN --mount=type=bind,src=.,dst=. \
     irispython iris_script.py && \
     iris stop IRIS quietly
 
-COPY . .
+# Expose port 4040
+EXPOSE 4040
 
-#ENTRYPOINT [ "irispython", "python/app.py" ]
+# Run the app on port 4040
+CMD ["bash", "-c", "iris start IRIS && irispython app.py --port=4040"]
