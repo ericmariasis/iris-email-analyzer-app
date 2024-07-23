@@ -3,11 +3,13 @@
 ## Functionality
 This is a flask application that implements a significant portion of [this community idea](https://ideas.intersystems.com/ideas/DPI-I-473) about flagging suspicious or confidential content in an outgoing email using Generative AI. This application uses functionality from the Python llama-index library.
 
-Navigating the app is fairly straightforward. On the top nav bar if you click **Analyze Email** you will see a form that allows you to enter common information from an outgoing email such as the message body, uploading attachments (for the sake of the analysis it only supports text based file types for this release), and To, CC and BCC fields for email addresses.
+On the top nav bar if you click **Analyze Email** you will see a form that allows you to enter common information from an outgoing email such as the message body, uploading attachments (for the sake of the analysis it only supports text based file types for this release), and To, CC and BCC fields for email addresses.
 
 llama-index asks the proper questions of whether email addresses seem like they're non-company related or suspicious emails, and it screens all attachments and the message body for confidential or suspicious content.
 
+There is also a page called **Role Info** which currently does not play a large part in the functionality at this time but it is there in case there are later enhancements to implement restrictions based on user roles.
 
+The app also has the ability to sign up new users and log in. User information is stored in an IRIS database.
 
 ## Installing and Running the Application as a Docker Image
 
@@ -65,3 +67,7 @@ to run the app locally.
 When it kicks off, at the bottom of the output you should see a series of `Running on` statements. Click any of them to open the app's homepage in a browser.
 
 ## App Navigation
+
+The home page upon opening the app looks something like this.
+
+![App Homepage](assets/HomePage.png)
