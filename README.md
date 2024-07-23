@@ -1,5 +1,9 @@
 # Iris Email Analyzer
 
+## Demo Video
+
+Please click [here](https://youtu.be/-6TNTlR3zHs) to watch a short demo and explanation of the app.
+
 ## Functionality
 This is a flask application that implements a significant portion of [this community idea](https://ideas.intersystems.com/ideas/DPI-I-473) about flagging suspicious or confidential content in an outgoing email using Generative AI. This application uses functionality from the Python llama-index library.
 
